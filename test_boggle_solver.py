@@ -71,6 +71,24 @@ class TestSuite_Simple_Edge_Cases(unittest.TestCase):
     solution = [x.upper() for x in game.getSolution()]
     expected = ["ABC","BCD"]
     self.assertEqual(sorted(solution), sorted(expected))
+  def test_duplicate_letters(self):
+    grid = [
+      ["A","A"],
+      ["A","A"]]
+    dictionary = ["aaa"]
+    game = Boggle(grid, dictionary)
+    solution = [x.upper() for x in game.getSolution()]
+    expected = ["AAA"]
+    self.assertEqual(sorted(solution), sorted(expected))
+  def test_short_words_ignored(self):
+    grid = [
+      ["A","T"],
+      ["G","O"]]
+    dictionary = ["at","go","ago"]
+    game = Boggle(grid, dictionary)
+    solution = [x.upper() for x in game.getSolution()]
+    expected = ["AGO"]
+    self.assertEqual(sorted(solution), sorted(expected))
 
 class TestSuite_Complete_Coverage(unittest.TestCase):
   #ADD MANY COMPLEXED TEST CASES
@@ -105,6 +123,16 @@ class TestSuite_Complete_Coverage(unittest.TestCase):
     solution = [x.upper() for x in game.getSolution()]
     expected = ["CAR","CARE","CART","TEA"]
     self.assertEqual(sorted(solution), sorted(expected))
+  def test_non_adjacent_letters(self):
+    grid = [
+      ["C","A","T"],
+      ["X","X","X"],
+      ["X","X","G"]]
+    dictionary = ["CATG"]
+    game = Boggle(grid, dictionary)
+    solution = game.getSolution()
+    expected = []
+    self.assertEqual(solution, expected)
 class TestSuite_Qu_and_St(unittest.TestCase):
   #ADD QU AND ST TEST CASES
   def test_qu_word(self):
@@ -127,6 +155,16 @@ class TestSuite_Qu_and_St(unittest.TestCase):
     solution = [x.upper() for x in game.getSolution()]
     expected = ["STAR","STARE"]
     self.assertEqual(sorted(solution), sorted(expected))
+  def test_q_without_u(self):
+    grid = [
+      ["Q","A","T"],
+      ["X","X","X"],
+      ["X","X","X"]]
+    dictionary = ["qat"]
+    game = Boggle(grid, dictionary)
+    solution = game.getSolution()
+    expected = ["QAT"]
+    self.assertEqual(solution, expected)
 if __name__ == '__main__':
 	unittest.main()
 
